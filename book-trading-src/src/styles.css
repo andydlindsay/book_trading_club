@@ -1,0 +1,151 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* elements */
+body {
+    font-family: 'Slabo 27px', serif;
+    margin: 0;
+    background-color: rgba(123,19,181,0.15);
+}
+
+md-card-content {
+    margin: auto;
+    padding: 0px 0px 0px 0px;
+}
+
+form {
+    padding: 16px 16px 16px 16px;
+    margin: 16px;
+}
+
+md-toolbar a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+md-card {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    min-width: 326px;
+}
+
+/* classes */
+.title-bar {
+    font-weight: normal;
+}
+
+.app-content {
+    padding: 10px;
+}
+
+.app-content md-card {
+    margin: 10px;
+}
+
+.app-toolbar-filler {
+    flex: 1 1 auto;
+}
+
+.app-icon-button {
+    box-shadow: none;
+    user-select: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: none;
+    font-weight: normal;
+    height: auto;
+    line-height: inherit;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 80%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-input-container {
+    width: 100%;
+    margin-top: 5px;
+    font-size: 1.25em;
+    padding-top: 16px;
+}
+
+.alert-failure {
+    color: white;
+    border-radius: 2px;
+    padding: 5px 5px 5px 18px;
+    margin-bottom: 10px;
+    background:#F44336;
+    border:1px solid red;
+}
+
+.alert-success {
+    color: white;
+    border-radius: 2px;
+    padding: 5px 5px 5px 18px;
+    margin-bottom: 10px;
+    background:#4CAF50;
+    border:1px solid green;
+}
+
+.padding-left-16 {
+    padding-left: 16px !important;
+}
+
+.padding-right-16 {
+    padding-right: 16px !important;
+}
+
+.padding-top-8 {
+    padding-top: 8px !important;
+}
+
+.padding-top-16 {
+    padding-top: 16px !important;
+}
+
+.margin-top-2 {
+    margin-top: 2px;
+}
+
+.margin-top-8 {
+    margin-top: 8px;
+}
+
+.margin-bottom-8 {
+    margin-bottom: 8px;
+}
+
+.margin-top-0 {
+    margin-top: 0px;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* id's */
+#home {
+    width: 80%;
+    margin: auto;
+    padding-top: 16px !important;
+}
