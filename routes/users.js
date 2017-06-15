@@ -80,5 +80,47 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
     });
 });
 
+// update user information
+router.put('/update',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        const userObj = {
+            'id': req.user._id,
+            'fullName': req.body.fullName,
+            'city': req.body.city,
+            'state': req.body.state
+        }
+        User.updateUser(userObj, (err, doc) => {
+            if (err) {
+                res.json({ success: false, msg: 'Failed to update information.', errmsg: err.message });
+            } else if (doc) {
+                res.json({ success: true, msg: 'Updated user information.' });
+            } else {
+                res.json({ success: false, msg: 'Failed to update information.' });
+            }
+        });
+    }
+);
+
+// new password
+router.put('/newpassword',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        const userObj = {
+            'id': req.user._id,
+            'password': req.body.password
+        }
+        User.newPassword(userObj, (err, doc) => {
+            if (err) {
+                res.json({ success: false, msg: 'Failed to update password.', errmsg: err.message });
+            } else if (doc) {
+                res.json({ success: true, msg: 'New password saved.' });
+            } else {
+                res.json({ success: false, msg: 'Failed to update password.' });
+            }
+        });
+    }
+);
+
 // export router
 module.exports = router;

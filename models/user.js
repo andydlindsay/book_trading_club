@@ -18,7 +18,6 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        minlength: [8, 'Password must be at least 8 characters long.'],
         required: [true, 'Password is a required.']
     },
     city: {
@@ -37,6 +36,31 @@ const userSchema = mongoose.Schema({
 
 // export user
 const User = module.exports = mongoose.model("User", userSchema, "users");
+
+module.exports.updateUser = function(userObj, callback) {
+    const user_id = userObj.id;
+    User.findByIdAndUpdate(user_id,
+    {
+        'fullName': userObj.fullName,
+        'city': userObj.city,
+        'state': userObj.state
+    }, callback);
+};
+
+module.exports.newPassword = function(userObj, callback) {
+    const user_id = userObj.id;
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(userObj.password, salt, (err, hash) => {
+            if (err) throw err;
+            const newPassword = hash;
+            User.findByIdAndUpdate(user_id,
+            {
+                'password': newPassword
+            }, callback);
+        });
+    });
+    
+};
 
 module.exports.getUserById = function(id, callback) {
     User.findById(id, callback);
