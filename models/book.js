@@ -9,12 +9,13 @@ const bookSchema = mongoose.Schema({
     title: {
         type: String
     },
-    imageUrl: {
-        type: String
-    },
-    ogOwner_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    images: {
+        smallUrl: {
+            type: String
+        },
+        smallThumbnailUrl: {
+            type: String
+        }
     },
     owner_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -50,8 +51,17 @@ const bookSchema = mongoose.Schema({
         default: 0
     },
     requestedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        requester_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        username: {
+            type: String
+        }
+    },
+    available: {
+        type: Boolean,
+        default: true
     },
     ts: {
         type: Date,
@@ -62,6 +72,56 @@ const bookSchema = mongoose.Schema({
 // export book
 const Book = module.exports = mongoose.model("Book", bookSchema, "books");
 
+module.exports.tradeBook = function(book_id, callback) {
+    Book.findById(book_id, { 'requestedBy.requester_id': 1, 'requestedBy.username': 1 }, (err, doc) => {
+        if (err) {
+            console.error(err);
+            callback(err);
+        } else if (doc) {
+            if (doc.requestedBy.requester_id != null) {
+                const prevOwner = {
+                    owner_id: doc.requestedBy.requester_id,
+                    username: doc.requestedBy.username
+                }
+                Book.findOneAndUpdate({ '_id': book_id },
+                    {
+                        'owner_id': doc.requestedBy.requester_id,
+                        'requestedBy.requester_id': null,
+                        'requestedBy.username': null,
+                        'available': true,
+                        $inc: { 'timesTraded': 1 },
+                        $push: { 'previousOwners': prevOwner } 
+                    }, callback);
+            } else {
+                callback();
+            }
+        } else {
+            callback();
+        }
+    });
+}
+
+module.exports.requestBook = function(book_id, requester_id, requester_username, callback) {
+    const requesterObj = {
+        'requester_id': requester_id,
+        'username': requester_username
+    }
+    Book.findOneAndUpdate({ '_id': book_id },
+        {
+            'requestedBy': requesterObj,
+            'available': false
+        }, callback);
+}
+
+module.exports.cancelRequest = function(book_id, callback) {
+    Book.findOneAndUpdate({ '_id': book_id },
+        {
+            'requestedBy.username': null,
+            'requestedBy.requester_id': null,
+            'available': true
+        }, callback);
+}
+
 module.exports.getBookById = function(id, callback) {
     Book.findById(id, callback);
 }
@@ -71,19 +131,24 @@ module.exports.addBook = function(newBook, callback) {
 }
 
 module.exports.getBooksByOwner = function(owner_id, callback) {
-    Book.find({ owner_id: owner_id }, { title: 1, imageUrl: 1, requestedBy: 1 }, callback);
+    Book.find({ owner_id: owner_id }, { title: 1, imageUrl: 1, available: 1 })
+        .sort({ title: 'asc' })
+        .exec(callback);
 }
 
 module.exports.removeBook = function(id, callback) {
     Book.findByIdAndRemove(id, callback);
 }
 
-module.exports.getBooks = function(itemsPerPage, currentPage, callback) {
-    Book.find({}, { title: 1, imageUrl: 1, requestedBy: 1 })
-        .sort({
-            ts: 'desc'
-        })
-        .skip(itemsPerPage * currentPage)
-        .limit(itemsPerPage)        
+module.exports.getBooks = function(itemsPerPage, currentPage, availableOnly, callback) {
+    let query = {};
+    if (availableOnly) {
+        query.available = true;
+    }
+    const currPage = Number(currentPage) || 1;
+    Book.find(query, { title: 1, imageUrl: 1, available: 1 })
+        .sort({ ts: 'desc' })
+        .skip(Number(itemsPerPage) * (currPage - 1))
+        .limit(Number(itemsPerPage))        
         .exec(callback);
 }

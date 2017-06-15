@@ -39,6 +39,7 @@ const port = process.env.PORT || 8080;
 
 // route variables
 const users = require('./routes/users');
+const books = require('./routes/books');
 
 // use morgan logger except during testing
 if (config.util.getEnv('NODE_ENV') !== 'test') {
@@ -64,6 +65,7 @@ require('./config/passport')(passport);
 
 // routes
 app.use('/api/users', users);
+app.use('/api/books', books);
 
 // catchall redirect
 app.get('*', (req, res) => {
