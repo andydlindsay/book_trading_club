@@ -1,0 +1,27 @@
+<div id="nav">
+  <md-card>
+    <md-toolbar>
+      <h2 class="title-bar">Book Xchange</h2>
+      <span class="app-toolbar-filler"></span>
+      <a routerLink="/">Home</a>
+      <div *ngIf="!isLoggedIn()">
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <a routerLink="/register">Register</a>
+        <span>&nbsp;&nbsp;</span>
+        <a routerLink="/login">Login</a>
+      </div>
+      <div *ngIf="isLoggedIn()">
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <a routerLink="/profile">Profile</a>
+        <span>&nbsp;&nbsp;</span>
+        <a class="anchor-button" (click)="onLogoutClick()">Logout</a>
+      </div>
+    </md-toolbar>
+    <md-card-content>
+      <div class="app-content">
+        <flash-messages></flash-messages>
+        <router-outlet></router-outlet>
+      </div>
+    </md-card-content>
+  </md-card>
+</div>

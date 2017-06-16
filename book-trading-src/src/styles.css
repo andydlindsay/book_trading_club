@@ -143,8 +143,12 @@ md-card {
     text-align: center;
 }
 
+.anchor-button {
+    cursor: pointer;
+}
+
 /* id's */
-#home {
+#nav {
     width: 80%;
     margin: auto;
     padding-top: 16px !important;
