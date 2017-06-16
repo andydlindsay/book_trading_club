@@ -1,1 +1,17 @@
-<h2>Home Works</h2>
+<md-card>
+    <md-toolbar>
+        <span class="title-font">All Books</span>
+    </md-toolbar>
+    <md-card-content>
+
+        <!-- book cards -->
+        <div class="flex-container">
+            <div *ngFor="let book of books">
+                <div class="image-card">
+                    <img class="image-card" md-card-image src="{{book.images.smallThumbnailUrl}}">
+                </div>
+            </div>
+        </div>
+
+    </md-card-content>
+</md-card>

@@ -1,3 +1,61 @@
-<p>
-  profile works!
-</p>
+<!-- TRADE REQUESTS AREA-->
+<div class="standard-flex">
+    
+    <!-- your trade requrests -->
+    <div class="flex-1">
+        <md-card>
+            <md-toolbar>
+                <span class="title-font">Your Trade Requests</span>
+            </md-toolbar>
+            <md-card-content>
+
+            </md-card-content>
+        </md-card>
+    </div>
+
+    <!-- trade requests for you -->
+    <div class="flex-1">
+        <md-card>
+            <md-toolbar>
+                <span class="title-font">Trade Requests for You</span>
+            </md-toolbar>
+            <md-card-content>
+                
+            </md-card-content>
+        </md-card>
+    </div>
+
+</div>
+
+<!-- PROFILE INFO AREA-->
+<div class="standard-flex">
+    <div class="flex-1">
+        <md-card>
+            <md-toolbar>
+                <span class="title-font">Profile Info</span>
+            </md-toolbar>
+            <md-card-content>
+
+            </md-card-content>
+        </md-card>
+    </div>
+</div>
+
+<!-- BOOK AREA -->
+<md-card>
+    <md-toolbar>
+        <span class="title-font">Your Books</span>
+        <span class="app-toolbar-filler"></span>
+        <button md-raised-button color="primary">Add Book</button>
+    </md-toolbar>
+    <md-card-content>
+        <!-- book cards -->
+        <div class="flex-container">
+            <div *ngFor="let book of books">
+                <div class="image-card">
+                    <img class="image-card" md-card-image src="{{book.images.smallThumbnailUrl}}">
+                </div>
+            </div>
+        </div>
+    </md-card-content>
+</md-card>

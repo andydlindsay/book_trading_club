@@ -13,7 +13,10 @@ router.post('/new',
                 smallUrl: req.body.smallUrl,
                 smallThumbnailUrl: req.body.smallThumbnailUrl
             },
-            owner_id: req.user._id,
+            owner: {
+                owner_id: req.user._id,
+                username: req.user.username
+            },
             previousOwners: [{
                 owner_id: req.user._id,
                 username: req.user.username

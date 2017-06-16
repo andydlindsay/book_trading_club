@@ -11,6 +11,7 @@ import 'hammerjs';
 
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
+import { BookService } from './services/book.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -50,7 +51,8 @@ const appRoutes: Routes = [
   providers: [
     Title,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    BookService
   ],
   bootstrap: [
     AppComponent

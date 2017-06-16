@@ -1,5 +1,5 @@
 <md-card>
-  <md-toolbar>Register</md-toolbar>
+  <md-toolbar><span class="title-font">Register</span></md-toolbar>
   <md-card-content>
     <form [formGroup]="registerForm">
       <md-input-container>
@@ -10,7 +10,7 @@
         <input required mdInput type="password" placeholder="Password" formControlName="password" id="password" dividerColor="accent">
         <md-hint *ngIf="formErrors.password">{{ formErrors.password }}</md-hint>
       </md-input-container>
-      <button md-raised-button color="primary" (click)="onRegisterSubmit()">Register</button>
+      <button class="title-font" md-raised-button color="primary" (click)="onRegisterSubmit()">Register</button>
     </form>
   </md-card-content>
 </md-card>

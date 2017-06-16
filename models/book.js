@@ -17,10 +17,15 @@ const bookSchema = mongoose.Schema({
             type: String
         }
     },
-    owner_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
+    owner: {
+        owner_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        username: {
+            type: String
+        }
+    },    
     previousOwners: [{
         owner_id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -85,7 +90,8 @@ module.exports.tradeBook = function(book_id, callback) {
                 }
                 Book.findOneAndUpdate({ '_id': book_id },
                     {
-                        'owner_id': doc.requestedBy.requester_id,
+                        'owner.owner_id': doc.requestedBy.requester_id,
+                        'owner.username': doc.requestedBy.requester_username,
                         'requestedBy.requester_id': null,
                         'requestedBy.username': null,
                         'available': true,
@@ -131,7 +137,7 @@ module.exports.addBook = function(newBook, callback) {
 }
 
 module.exports.getBooksByOwner = function(owner_id, callback) {
-    Book.find({ owner_id: owner_id }, { title: 1, imageUrl: 1, available: 1 })
+    Book.find({ 'owner.owner_id': owner_id }, { title: 1, images: 1, available: 1 })
         .sort({ title: 'asc' })
         .exec(callback);
 }
@@ -146,7 +152,7 @@ module.exports.getBooks = function(itemsPerPage, currentPage, availableOnly, cal
         query.available = true;
     }
     const currPage = Number(currentPage) || 1;
-    Book.find(query, { title: 1, imageUrl: 1, available: 1 })
+    Book.find(query, { title: 1, images: 1, available: 1 })
         .sort({ ts: 'desc' })
         .skip(Number(itemsPerPage) * (currPage - 1))
         .limit(Number(itemsPerPage))        

@@ -1,5 +1,5 @@
 <md-card>
-  <md-toolbar>Login</md-toolbar>
+  <md-toolbar><span class="title-font">Login</span></md-toolbar>
   <md-card-content>
     <form [formGroup]="loginForm">
       <md-input-container>
@@ -10,7 +10,7 @@
         <input type="password" required mdInput placeholder="Password" formControlName="password" id="password">
         <md-hint *ngIf="formErrors.password">{{ formErrors.password }}</md-hint>
       </md-input-container>
-      <button md-raised-button color="primary" (click)="onLoginSubmit()">Login</button>
+      <button class="title-font" md-raised-button color="primary" (click)="onLoginSubmit()">Login</button>
     </form>
   </md-card-content>
 </md-card>

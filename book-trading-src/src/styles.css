@@ -2,8 +2,12 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 /* elements */
+html {
+    font-family: 'Slabo 27px', serif !important;
+}
+
 body {
-    font-family: 'Slabo 27px', serif;
+    font-family: 'Slabo 27px', serif !important;
     margin: 0;
     background-color: rgba(123,19,181,0.15);
 }
@@ -31,7 +35,8 @@ md-card {
     padding-left: 0 !important;
     padding-right: 0 !important;
     padding-top: 0 !important;
-    min-width: 326px;
+    padding-bottom: 0 !important;
+    /*min-width: 326px;*/
 }
 
 /* classes */
@@ -76,6 +81,14 @@ md-card {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.standard-flex {
+    display: flex;
+}
+
+.flex-1 {
+    flex: 1;
 }
 
 .mat-input-container {
@@ -147,9 +160,26 @@ md-card {
     cursor: pointer;
 }
 
+.image-card {
+    margin-bottom: 15px !important;
+    margin-top: 15px !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    width: 65%;
+}
+
+.mat-input-wrapper {
+    font-family: 'Slabo 27px', serif !important;
+}
+
+.title-font {
+    font-family: 'Slabo 27px', serif !important;
+}
+
 /* id's */
 #nav {
     width: 80%;
     margin: auto;
     padding-top: 16px !important;
+    font-family: 'Slabo 27px', serif !important;
 }
