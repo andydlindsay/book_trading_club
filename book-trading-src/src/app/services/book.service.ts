@@ -23,9 +23,34 @@ export class BookService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get(
-      this.baseUrl + '/api/books/byowner/' + owner_id,
-      { headers }
-      )
+        this.baseUrl + '/api/books/byowner/' + owner_id,
+        { headers })
+      .map(res => res.json());
+  }
+
+  loadToken() {
+    this.authToken = localStorage.getItem('id_token');
+  }
+
+  getBooksRequestedByUser() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    return this.http.get(
+        this.baseUrl + '/api/books/requestedby',
+        { headers })
+      .map(res => res.json());
+  }
+
+  getBooksRequestedFromUser() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    return this.http.get(
+        this.baseUrl + '/api/books/requestedfrom',
+        { headers })
       .map(res => res.json());
   }
 

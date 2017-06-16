@@ -77,6 +77,22 @@ const bookSchema = mongoose.Schema({
 // export book
 const Book = module.exports = mongoose.model("Book", bookSchema, "books");
 
+module.exports.getBooksRequestedByUser = function(user_id, callback) {
+    Book.find(
+        { 'requestedBy.requester_id': user_id },
+        { 'title': 1, 'owner': 1 },
+        callback
+    );
+}
+
+module.exports.getBooksRequestedFromUser = function(user_id, callback) {
+    Book.find(
+        { 'owner.owner_id': user_id, 'available': false },
+        { 'title': 1, 'requestedBy': 1 },
+        callback
+    );
+}
+
 module.exports.tradeBook = function(book_id, callback) {
     Book.findById(book_id, { 'requestedBy.requester_id': 1, 'requestedBy.username': 1 }, (err, doc) => {
         if (err) {

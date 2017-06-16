@@ -3,6 +3,36 @@ const express = require('express'),
       Book = require('../models/book'),
       passport = require('passport');
 
+router.get('/requestedby',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Book.getBooksRequestedByUser(req.user._id, (err, docs) => {
+            if (err) {
+                res.json({ success: false, msg: 'Failed to retrieve books.', errnsg: err.message });
+            } else if (docs) {
+                res.json({ success: true, books: docs });
+            } else {
+                res.json({ success: false, msg: 'Failed to retrieve books.' });
+            }
+        });
+    }
+);
+
+router.get('/requestedfrom',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Book.getBooksRequestedFromUser(req.user._id, (err, docs) => {
+            if (err) {
+                res.json({ success: false, msg: 'Failed to retrieve books.', errnsg: err.message });
+            } else if (docs) {
+                res.json({ success: true, books: docs });
+            } else {
+                res.json({ success: false, msg: 'Failed to retrieve books.' });
+            }
+        });
+    }
+);
+
 router.post('/new',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {

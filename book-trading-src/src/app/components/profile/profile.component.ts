@@ -18,6 +18,8 @@ export class ProfileComponent implements OnInit {
 
   books: any;
   user: any;
+  booksRequestedBy: any;
+  booksRequestedFrom: any;
 
   ngOnInit() {
     this.titleService.setTitle('Profile - Book Xchange');
@@ -37,6 +39,26 @@ export class ProfileComponent implements OnInit {
             }
           );
         }
+      },
+      err => {
+        console.error(err);
+        return false;
+      }
+    );
+    this.bookService.getBooksRequestedByUser().subscribe(
+      data => {
+        this.booksRequestedBy = data.books;
+        console.log('requestedby:', this.booksRequestedBy);
+      },
+      err => {
+        console.error(err);
+        return false;
+      }
+    );
+    this.bookService.getBooksRequestedFromUser().subscribe(
+      data => {
+        this.booksRequestedFrom = data.books;
+        console.log('requestedfrom:', this.booksRequestedFrom);
       },
       err => {
         console.error(err);

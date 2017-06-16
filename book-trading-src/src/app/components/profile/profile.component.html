@@ -8,7 +8,20 @@
                 <span class="title-font">Your Trade Requests</span>
             </md-toolbar>
             <md-card-content>
-
+                <div *ngIf="!booksRequestedBy.length > 0">
+                    <h3 class="text-center title-font padding-bottom-16">You have no outstanding trade requests</h3>
+                </div>
+                <div *ngIf="booksRequestedBy.length > 0">
+                    <div class="standard-flex" *ngFor="let bookRequestedBy of booksRequestedBy">
+                        <h3 class="title-font flex-1 padding-left-16">
+                            You requested {{ bookRequestedBy.title }} from {{ bookRequestedBy.owner.username }}
+                        </h3>
+                        <span class="app-toolbar-filler"></span>
+                        <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
+                            <button md-raised-button color="accent" class="title-font">Cancel</button>
+                        </div>
+                    </div>
+                </div>
             </md-card-content>
         </md-card>
     </div>
@@ -20,7 +33,22 @@
                 <span class="title-font">Trade Requests for You</span>
             </md-toolbar>
             <md-card-content>
-                
+                <div *ngIf="!booksRequestedFrom.length > 0">
+                    <h3 class="text-center title-font padding-bottom-16">You have no outstanding trade requests</h3>
+                </div>
+                <div *ngIf="booksRequestedFrom.length > 0">
+                    <div class="standard-flex" *ngFor="let bookRequestedFrom of booksRequestedFrom">
+                        <h3 class="title-font flex-1 padding-left-16">
+                            {{ bookRequestedFrom.requestedBy.username }} has requested {{ bookRequestedFrom.title }}
+                        </h3>
+                        <span class="app-toolbar-filler"></span>
+                        <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
+                            <button md-raised-button color="primary" class="title-font">Accept</button>
+                            &nbsp;&nbsp;
+                            <button md-raised-button color="accent" class="title-font">Reject</button>
+                        </div>
+                    </div>
+                </div>
             </md-card-content>
         </md-card>
     </div>
@@ -46,7 +74,7 @@
     <md-toolbar>
         <span class="title-font">Your Books</span>
         <span class="app-toolbar-filler"></span>
-        <button md-raised-button color="primary">Add Book</button>
+        <button md-raised-button color="primary" class="title-font">Add Book</button>
     </md-toolbar>
     <md-card-content>
         <!-- book cards -->

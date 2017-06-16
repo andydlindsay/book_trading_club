@@ -85,10 +85,15 @@ md-card {
 
 .standard-flex {
     display: flex;
+    flex-wrap: wrap;
+}
+
+.background-none {
+    background-color: white;
 }
 
 .flex-1 {
-    flex: 1;
+    flex: 1 1 auto;
 }
 
 .mat-input-container {
@@ -132,24 +137,40 @@ md-card {
     padding-top: 16px !important;
 }
 
+.padding-bottom-8 {
+    padding-bottom: 8px !important;
+}
+
+.padding-bottom-16 {
+    padding-bottom: 16px !important;
+}
+
 .margin-top-2 {
-    margin-top: 2px;
+    margin-top: 2px !important;
 }
 
 .margin-top-8 {
-    margin-top: 8px;
+    margin-top: 8px !important;
 }
 
 .margin-bottom-8 {
-    margin-bottom: 8px;
+    margin-bottom: 8px !important;
+}
+
+.margin-bottom-16 {
+    margin-bottom: 16px !important;
 }
 
 .margin-top-0 {
-    margin-top: 0px;
+    margin-top: 0px !important;
+}
+
+.margin-auto {
+    margin: auto;
 }
 
 .margin-bottom-0 {
-    margin-bottom: 0px;
+    margin-bottom: 0px !important;
 }
 
 .text-center {
