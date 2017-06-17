@@ -8,7 +8,9 @@
         <div class="flex-container">
             <div *ngFor="let book of books">
                 <div class="image-card">
-                    <img class="image-card" md-card-image src="{{book.images.smallThumbnailUrl}}">
+                    <a routerLink="{{ '/book/' + book._id }}">
+                        <img class="image-card" md-card-image src="{{book.images.smallThumbnailUrl}}">
+                    </a>
                 </div>
             </div>
         </div>

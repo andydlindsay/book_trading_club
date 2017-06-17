@@ -14,7 +14,7 @@
                 <div *ngIf="booksRequestedBy.length > 0">
                     <div class="standard-flex" *ngFor="let bookRequestedBy of booksRequestedBy">
                         <h3 class="title-font flex-1 padding-left-16">
-                            You requested {{ bookRequestedBy.title }} from {{ bookRequestedBy.owner.username }}
+                            You requested <a routerLink="{{ '/book/' + bookRequestedBy._id }}">{{ bookRequestedBy.title }}</a> from {{ bookRequestedBy.owner.username }}
                         </h3>
                         <span class="app-toolbar-filler"></span>
                         <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
@@ -39,7 +39,7 @@
                 <div *ngIf="booksRequestedFrom.length > 0">
                     <div class="standard-flex" *ngFor="let bookRequestedFrom of booksRequestedFrom">
                         <h3 class="title-font flex-1 padding-left-16">
-                            {{ bookRequestedFrom.requestedBy.username }} has requested {{ bookRequestedFrom.title }}
+                            {{ bookRequestedFrom.requestedBy.username }} has requested <a routerLink="{{ '/book/' + bookRequestedFrom._id }}">{{ bookRequestedFrom.title }}</a>
                         </h3>
                         <span class="app-toolbar-filler"></span>
                         <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
@@ -81,7 +81,9 @@
         <div class="flex-container">
             <div *ngFor="let book of books">
                 <div class="image-card">
-                    <img class="image-card" md-card-image src="{{book.images.smallThumbnailUrl}}">
+                    <a routerLink="{{ '/book/' + book._id }}">
+                        <img class="image-card" md-card-image src="{{book.images.smallThumbnailUrl}}">
+                    </a>
                 </div>
             </div>
         </div>

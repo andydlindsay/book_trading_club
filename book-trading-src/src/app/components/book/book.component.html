@@ -1,0 +1,29 @@
+<md-card>
+  <md-toolbar>
+    <span class="title-font">{{ book.title }}</span>
+    <span class="app-toolbar-filler"></span>
+    <button md-raised-button color="primary" class="title-font">Request Book</button>
+  </md-toolbar>
+  <md-card-content>
+
+    <div class="standard-flex">
+    
+      <!-- IMAGE AREA -->
+      <div class="flex-1 min-width-300 max-width-450 padding-top-24 padding-bottom-24">
+        <img class="margin-auto display-block" src="{{ book.images.smallUrl }}">
+      </div>
+
+      <!-- INFO AREA -->
+      <div class="title-font flex-1 padding-left-16 padding-top-8 padding-right-16 padding-bottom-8 max-width-600">
+        <h1>Title: {{ book.title }}</h1>
+        <h2>Author: {{ googleBook.volumeInfo.authors.join(', ') }}</h2>
+        <h3>Description: <span [innerHTML]="googleBook.volumeInfo.description"></span></h3>
+        <h2>Rating: {{ googleBook.volumeInfo.averageRating }}</h2>
+        <p>Based on {{ googleBook.volumeInfo.ratingsCount }} ratings</p>
+        <h2>Owner: {{ book.owner.username }}</h2>
+      </div>
+    
+    </div>
+
+  </md-card-content>
+</md-card>

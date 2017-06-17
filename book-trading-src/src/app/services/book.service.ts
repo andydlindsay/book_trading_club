@@ -28,6 +28,15 @@ export class BookService {
       .map(res => res.json());
   }
 
+  getBookById(book_id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(
+        this.baseUrl + '/api/books/' + book_id,
+        { headers })
+      .map(res => res.json());
+  }
+
   loadToken() {
     this.authToken = localStorage.getItem('id_token');
   }
