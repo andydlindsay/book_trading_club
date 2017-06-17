@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { BookService } from '../../services/book.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +15,9 @@ export class ProfileComponent implements OnInit {
   constructor(
     private titleService: Title,
     private auth: AuthService,
-    private bookService: BookService
+    private bookService: BookService,
+    private flashMessage: FlashMessagesService,
+    private router: Router
   ) { }
 
   books: any;
@@ -59,6 +63,48 @@ export class ProfileComponent implements OnInit {
       data => {
         this.booksRequestedFrom = data.books;
         console.log('requestedfrom:', this.booksRequestedFrom);
+      },
+      err => {
+        console.error(err);
+        return false;
+      }
+    );
+  }
+
+  onCancelClick(book_id) {
+    this.bookService.cancelRequest(book_id).subscribe(
+      data => {
+        if (data.success) {
+          this.flashMessage.show('Request cancelled.', { cssClass: 'alert-success' });
+          const currentUrl = this.router.url;
+          const refreshUrl = currentUrl.indexOf('someRoute') > -1 ? '/someOtherRoute' : '/someRoute';
+          this.router.navigateByUrl(refreshUrl).then(() => {
+            this.router.navigateByUrl(currentUrl);
+          });
+        } else {
+          this.flashMessage.show(data.msg + ' Please try again.', { cssClass: 'alert-failure' });
+        }
+      },
+      err => {
+        console.error(err);
+        return false;
+      }
+    );
+  }
+
+  onAcceptClick(book_id) {
+    this.bookService.tradeBook(book_id).subscribe(
+      data => {
+        if (data.success) {
+          this.flashMessage.show('Trade accepted.', { cssClass: 'alert-success' });
+          const currentUrl = this.router.url;
+          const refreshUrl = currentUrl.indexOf('someRoute') > -1 ? '/someOtherRoute' : '/someRoute';
+          this.router.navigateByUrl(refreshUrl).then(() => {
+            this.router.navigateByUrl(currentUrl);
+          });
+        } else {
+          this.flashMessage.show(data.msg + ' Please try again.', { cssClass: 'alert-failure' });
+        }
       },
       err => {
         console.error(err);

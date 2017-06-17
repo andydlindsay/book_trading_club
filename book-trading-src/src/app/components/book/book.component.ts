@@ -3,7 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { BookService } from '../../services/book.service';
 import { GooglebookService } from '../../services/googlebook.service';
-import { ActivatedRoute } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-book',
@@ -17,13 +18,17 @@ export class BookComponent implements OnInit {
     private auth: AuthService,
     private bookService: BookService,
     private route: ActivatedRoute,
-    private googlebookService: GooglebookService
+    private googlebookService: GooglebookService,
+    private flashMessage: FlashMessagesService,
+    private router: Router
   ) { }
 
   book: any;
   googleBook: any;
+  user_id: any;
 
   ngOnInit() {
+
     this.route.params
       .subscribe(params => {
         const book_id = params['id'];
@@ -32,13 +37,11 @@ export class BookComponent implements OnInit {
             data => {
               if (data) {
                 this.book = data.book;
-                console.log('book:', this.book);
                 this.titleService.setTitle(data.book.title + ' - Book Xchange');
                 this.googlebookService.getBookById(data.book.volumeId)
                   .subscribe(
                     data => {
                       this.googleBook = data;
-                      console.log('googlebook:', this.googleBook);
                     },
                     err => {
                       console.error(err);
@@ -53,6 +56,40 @@ export class BookComponent implements OnInit {
             }
           );
       });
+
+    if (this.auth.loggedIn()) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      this.user_id = user.id;
+    }
+  }
+
+  isLoggedIn() {
+    return this.auth.loggedIn();
+  }
+
+  onRequestClick() {
+    if (!this.isLoggedIn()) {
+      this.router.navigate(['/register']);
+    } else {
+      this.bookService.makeRequest(this.book._id).subscribe(
+        data => {
+          if (data.success) {
+            this.flashMessage.show('Request made!', { cssClass: 'alert-success' });
+            const currentUrl = this.router.url;
+            const refreshUrl = currentUrl.indexOf('someRoute') > -1 ? '/someOtherRoute' : '/someRoute';
+            this.router.navigateByUrl(refreshUrl).then(() => {
+              this.router.navigateByUrl(currentUrl);
+            });
+          } else {
+            this.flashMessage.show(data.msg + ' Please try again.', { cssClass: 'alert-failuer' });
+          }
+        },
+        err => {
+          console.error(err);
+          return false;
+        }
+      );
+    }
   }
 
 }

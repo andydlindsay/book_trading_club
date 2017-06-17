@@ -2,7 +2,7 @@
 <div class="standard-flex">
     
     <!-- your trade requrests -->
-    <div class="flex-1">
+    <div class="flex-1" *ngIf="booksRequestedBy != undefined">
         <md-card>
             <md-toolbar>
                 <span class="title-font">Your Trade Requests</span>
@@ -18,7 +18,7 @@
                         </h3>
                         <span class="app-toolbar-filler"></span>
                         <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
-                            <button md-raised-button color="accent" class="title-font">Cancel</button>
+                            <button md-raised-button color="accent" class="title-font" (click)="onCancelClick(bookRequestedBy._id)">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
     </div>
 
     <!-- trade requests for you -->
-    <div class="flex-1">
+    <div class="flex-1" *ngIf="booksRequestedFrom != undefined">
         <md-card>
             <md-toolbar>
                 <span class="title-font">Trade Requests for You</span>
@@ -43,9 +43,9 @@
                         </h3>
                         <span class="app-toolbar-filler"></span>
                         <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
-                            <button md-raised-button color="primary" class="title-font">Accept</button>
+                            <button md-raised-button color="primary" class="title-font" (click)="onAcceptClick(bookRequestedFrom._id)">Accept</button>
                             &nbsp;&nbsp;
-                            <button md-raised-button color="accent" class="title-font">Reject</button>
+                            <button md-raised-button color="accent" class="title-font" (click)="onCancelClick(bookRequestedFrom._id)">Reject</button>
                         </div>
                     </div>
                 </div>

@@ -121,7 +121,7 @@ router.get('/byowner/:id', (req, res) => {
     });
 });
 
-router.put('/:id/request',
+router.get('/:id/request',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
         const requester_id = req.user._id;
@@ -139,7 +139,7 @@ router.put('/:id/request',
     }
 );
 
-router.put('/:id/cancelrequest',
+router.get('/:id/cancelrequest',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
         const book_id = req.params.id;
@@ -155,7 +155,7 @@ router.put('/:id/cancelrequest',
     }
 );
 
-router.put('/:id/trade',
+router.get('/:id/trade',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
         const book_id = req.params.id;

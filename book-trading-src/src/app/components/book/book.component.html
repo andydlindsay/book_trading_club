@@ -1,8 +1,9 @@
-<md-card>
+<md-card *ngIf="book != undefined && googleBook != undefined">
   <md-toolbar>
     <span class="title-font">{{ book.title }}</span>
     <span class="app-toolbar-filler"></span>
-    <button md-raised-button color="primary" class="title-font">Request Book</button>
+    <button *ngIf="book.available && book.owner.owner_id != user_id" md-raised-button color="primary" class="title-font" (click)="onRequestClick()">Request Book</button>
+    <span class="title-font" *ngIf="!book.available && book.owner.owner_id != user_id">Not available for trade</span>
   </md-toolbar>
   <md-card-content>
 
@@ -17,9 +18,9 @@
       <div class="title-font flex-1 padding-left-16 padding-top-8 padding-right-16 padding-bottom-8 max-width-600">
         <h1>Title: {{ book.title }}</h1>
         <h2>Author: {{ googleBook.volumeInfo.authors.join(', ') }}</h2>
-        <h3>Description: <span [innerHTML]="googleBook.volumeInfo.description"></span></h3>
-        <h2>Rating: {{ googleBook.volumeInfo.averageRating }}</h2>
-        <p>Based on {{ googleBook.volumeInfo.ratingsCount }} ratings</p>
+        <h3><span [innerHTML]="googleBook.volumeInfo.description"></span></h3>
+        <h2 class="margin-bottom-0">Rating: {{ googleBook.volumeInfo.averageRating }}</h2>
+        <p class="margin-top-0">Based on {{ googleBook.volumeInfo.ratingsCount }} ratings</p>
         <h2>Owner: {{ book.owner.username }}</h2>
       </div>
     

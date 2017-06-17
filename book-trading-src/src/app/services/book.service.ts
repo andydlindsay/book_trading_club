@@ -37,6 +37,39 @@ export class BookService {
       .map(res => res.json());
   }
 
+  makeRequest(book_id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    return this.http.get(
+        this.baseUrl + '/api/books/' + book_id + '/request',
+        { headers })
+      .map(res => res.json());
+  }
+
+  cancelRequest(book_id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    return this.http.get(
+        this.baseUrl + '/api/books/' + book_id + '/cancelrequest',
+        { headers })
+      .map(res => res.json());
+  }
+
+  tradeBook(book_id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    return this.http.get(
+        this.baseUrl + '/api/books/' + book_id + '/trade',
+        { headers })
+      .map(res => res.json());
+  }
+
   loadToken() {
     this.authToken = localStorage.getItem('id_token');
   }
