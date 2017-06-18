@@ -609,7 +609,7 @@ var HomeComponent = (function () {
         this.bookService.getBooks().subscribe(function (data) {
             if (data) {
                 _this.books = data.books;
-                console.log(_this.books);
+                // console.log(this.books);
             }
         }, function (err) {
             console.error(err);

@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
       data => {
         if (data) {
           this.books = data.books;
-          console.log(this.books);
+          // console.log(this.books);
         }
       },
       err => {
