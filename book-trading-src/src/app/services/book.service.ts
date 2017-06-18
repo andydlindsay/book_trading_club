@@ -7,7 +7,8 @@ import 'rxjs/add/operator/map';
 export class BookService {
 
   authToken: any;
-  baseUrl: String = 'http://localhost:8080';
+  // baseUrl: String = 'http://localhost:8080';
+  baseUrl: String = '';
 
   constructor(
     private http: Http,

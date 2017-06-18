@@ -9,7 +9,8 @@ export class AuthService {
   authToken: any;
   user: any;
   jwtHelper: JwtHelper = new JwtHelper();
-  baseUrl: String = 'http://localhost:8080';
+  // baseUrl: String = 'http://localhost:8080';
+  baseUrl: String = '';
 
   constructor(
     private http: Http

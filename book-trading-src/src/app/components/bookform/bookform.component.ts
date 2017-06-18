@@ -118,7 +118,7 @@ export class BookformComponent implements OnInit {
     this.googlebookService.getBooks(this.searchTerm, this.itemsPerPage, this.currentPage).subscribe(
       data => {
         this.searchResults = data.items;
-        console.log('searchResults:', this.searchResults);
+        // console.log('searchResults:', this.searchResults);
         this.totalResults = data.totalItems;
         this.searching = false;
       },
@@ -134,7 +134,7 @@ export class BookformComponent implements OnInit {
     this.googlebookService.getBookById(volumeId).subscribe(
       data => {
         let smallUrl, smallThumbnailUrl;
-        console.log('data', data);
+        // console.log('data', data);
         if (data.volumeInfo.imageLinks == undefined) {
           // book has no image, substitute book image from s3
           smallUrl = 'https://s3.amazonaws.com/andydlindsay-book-trading/book-152-191668.png';
@@ -151,7 +151,6 @@ export class BookformComponent implements OnInit {
         }
         this.bookService.addBook(newBook).subscribe(
           data => {
-            console.log('book added?', data);
             this.flashMessage.show('Book added!', { cssClass: 'alert-success' });
             this.updateSearchResults();
           },

@@ -35,11 +35,11 @@ export class ProfileComponent implements OnInit {
       data => {
         if (data) {
           this.user = data.user;
-          console.log('user:', this.user);
+          // console.log('user:', this.user);
           this.bookService.getBooksByOwner(this.user['id']).subscribe(
             data => {
               this.books = data.books;
-              console.log(this.books);
+              // console.log(this.books);
             },
             err => {
               console.error(err);
@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit {
     this.bookService.getBooksRequestedByUser().subscribe(
       data => {
         this.booksRequestedBy = data.books;
-        console.log('requestedby:', this.booksRequestedBy);
+        // console.log('requestedby:', this.booksRequestedBy);
       },
       err => {
         console.error(err);
@@ -66,7 +66,7 @@ export class ProfileComponent implements OnInit {
     this.bookService.getBooksRequestedFromUser().subscribe(
       data => {
         this.booksRequestedFrom = data.books;
-        console.log('requestedfrom:', this.booksRequestedFrom);
+        // console.log('requestedfrom:', this.booksRequestedFrom);
       },
       err => {
         console.error(err);
