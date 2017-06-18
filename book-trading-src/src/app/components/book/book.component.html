@@ -1,5 +1,5 @@
 <md-card *ngIf="book != undefined && googleBook != undefined">
-  <md-toolbar>
+  <md-toolbar class="primary-color">
     <span class="title-font">{{ book.title }}</span>
     <span class="app-toolbar-filler"></span>
     <button *ngIf="book.available && book.owner.owner_id != user_id" md-raised-button color="primary" class="title-font" (click)="onRequestClick()">Request Book</button>
@@ -20,8 +20,10 @@
         <h1>Title: {{ book.title }}</h1>
         <h2>Author: {{ googleBook.volumeInfo.authors.join(', ') }}</h2>
         <h3><span [innerHTML]="googleBook.volumeInfo.description"></span></h3>
-        <h2 class="margin-bottom-0">Rating: {{ googleBook.volumeInfo.averageRating }}</h2>
-        <p class="margin-top-0">Based on {{ googleBook.volumeInfo.ratingsCount }} ratings</p>
+        <div *ngIf="googleBook.volumeInfo.averageRating != undefined">
+          <h2 class="margin-bottom-0">Rating: {{ googleBook.volumeInfo.averageRating }}</h2>
+          <p class="margin-top-0">Based on {{ googleBook.volumeInfo.ratingsCount }} ratings</p>
+        </div>
         <h2>Owner: {{ book.owner.username }}</h2>
       </div>
     

@@ -1,10 +1,39 @@
 <div class="standard-flex">
     
+    <!-- PROFILE INFO AREA-->
+    <div class="flex-1" id="info-area">
+        <md-card>
+            <md-toolbar class="primary-color">
+                <span class="title-font">Your Info</span>
+            </md-toolbar>
+            <md-card-content>
+
+                <form [formGroup]="profileForm" *ngIf="user != undefined">
+                    <md-input-container>
+                        <input [ngModel]="user.fullName" type="text" mdInput placeholder="Full name" formControlName="fullname" id="fullname">
+                        <md-hint *ngIf="formErrors.fullname">{{ formErrors.fullname }}</md-hint>
+                    </md-input-container>
+                    <md-input-container>
+                        <input [ngModel]="user.city" type="text" mdInput placeholder="City" formControlName="city" id="city">
+                        <md-hint *ngIf="formErrors.city">{{ formErrors.city }}</md-hint>
+                    </md-input-container>
+                    <md-input-container>
+                        <input [ngModel]="user.state" type="text" mdInput placeholder="State" formControlName="state" id="state">
+                        <md-hint *ngIf="formErrors.state">{{ formErrors.state }}</md-hint>
+                    </md-input-container>
+                    <button class="title-font" md-raised-button color="primary" (click)="onUpdateClick()">Update</button>
+                </form>
+
+            </md-card-content>
+        </md-card>
+    </div>
+
+
     <!-- your trade requrests -->
     <div class="flex-1">
         <md-card>
 
-            <md-toolbar>
+            <md-toolbar class="primary-color">
                 <span class="title-font">Your Trade Requests</span>
             </md-toolbar>
 
@@ -14,7 +43,7 @@
                     <div *ngIf="booksRequestedBy.length > 0">
                         <div class="standard-flex" *ngFor="let bookRequestedBy of booksRequestedBy">
                             <h3 class="title-font flex-1 padding-left-16">
-                                You requested <a routerLink="{{ '/book/' + bookRequestedBy._id }}">{{ bookRequestedBy.title }}</a> from {{ bookRequestedBy.owner.username }}
+                                you have requested <a routerLink="{{ '/book/' + bookRequestedBy._id }}">{{ bookRequestedBy.title }}</a> from {{ bookRequestedBy.owner.username }}
                             </h3>
                             <span class="app-toolbar-filler"></span>
                             <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
@@ -51,41 +80,14 @@
         </md-card>
     </div>
 
-    <!-- PROFILE INFO AREA-->
-    <div class="flex-1">
-        <md-card>
-            <md-toolbar>
-                <span class="title-font">Your Info</span>
-            </md-toolbar>
-            <md-card-content>
-
-                <form [formGroup]="profileForm" *ngIf="user != undefined">
-                    <md-input-container>
-                        <input [ngModel]="user.fullName" type="text" mdInput placeholder="Full name" formControlName="fullname" id="fullname">
-                        <md-hint *ngIf="formErrors.fullname">{{ formErrors.fullname }}</md-hint>
-                    </md-input-container>
-                    <md-input-container>
-                        <input [ngModel]="user.city" type="text" mdInput placeholder="City" formControlName="city" id="city">
-                        <md-hint *ngIf="formErrors.city">{{ formErrors.city }}</md-hint>
-                    </md-input-container>
-                    <md-input-container>
-                        <input [ngModel]="user.state" type="text" mdInput placeholder="State" formControlName="state" id="state">
-                        <md-hint *ngIf="formErrors.state">{{ formErrors.state }}</md-hint>
-                    </md-input-container>
-                    <button class="title-font" md-raised-button color="primary" (click)="onUpdateClick()">Update</button>
-                </form>
-
-            </md-card-content>
-        </md-card>
-    </div>
-
+    
 </div>
 
 
 
 <!-- BOOK AREA -->
 <md-card>
-    <md-toolbar>
+    <md-toolbar class="primary-color">
         <span class="title-font">Your Books</span>
         <span class="app-toolbar-filler"></span>
         <button md-raised-button color="primary" routerLink="/newbook" class="title-font">Add Book</button>

@@ -1,5 +1,5 @@
 <md-card>
-  <md-toolbar>
+  <md-toolbar class="primary-color">
     <span class="title-font">Add a Book</span>
   </md-toolbar>
 
@@ -10,7 +10,7 @@
         <input type="search" required mdInput placeholder="Enter a title or author" formControlName="search" id="search">
         <md-hint *ngIf="formErrors.search">{{ formErrors.search }}</md-hint>
       </md-input-container>
-      <button type="submit" md-raised-button color="accent" (click)="onSearchSubmit()"><md-icon>search</md-icon></button>
+      <button type="submit" md-raised-button color="primary" (click)="onSearchSubmit()"><md-icon>search</md-icon></button>
     </form>
 
     <!-- display if currently searching -->
@@ -42,9 +42,23 @@
           <button md-raised-button color="primary" (click)="addBook(result.id)">Add Book</button>
         </div>
 
+      </div> <!-- search results -->
 
+    </div>
+
+    <!-- display page navigation -->
+    <div *ngIf="searchResults != undefined" class="padding-bottom-16">
+      <div *ngIf="totalResults > 10" class="standard-flex">
+        <span class="app-toolbar-filler"></span>
+        <button md-button [disabled]="isFirstPage()" (click)="prevPage()">
+          <md-icon>navigate_before</md-icon>Prev Page
+        </button>
+        <h2>&nbsp;{{ currentPage }}&nbsp;</h2>
+        <button md-button [disabled]="isLastPage()" (click)="nextPage()">
+          Next Page<md-icon>navigate_next</md-icon>
+        </button>
+        <span class="app-toolbar-filler"></span>
       </div>
-
     </div>
 
   </md-card-content> 

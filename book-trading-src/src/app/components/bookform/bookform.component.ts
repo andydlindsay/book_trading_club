@@ -28,11 +28,10 @@ export class BookformComponent implements OnInit {
   searchForm: FormGroup;
   searchTerm: string;
   searchResults: any;
-  numResults: number;
+  totalResults: number;
   searching: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 12;
-  totalResults: number;
 
   ngOnInit() {
     this.titleService.setTitle('Add a Book - Book Xchange');
@@ -78,6 +77,32 @@ export class BookformComponent implements OnInit {
     }
   }
 
+  isFirstPage() {
+    if (this.currentPage == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isLastPage() {
+    if (Math.ceil(Number(this.totalResults) / Number(this.itemsPerPage)) == this.currentPage) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  nextPage() {
+    this.currentPage += 1;
+    this.updateSearchResults();
+  }
+
+  prevPage() {
+    this.currentPage -= 1;
+    this.updateSearchResults();
+  }
+
   onSearchSubmit() {
     // check if search form is valid
     if (this.searchForm.valid) {
@@ -94,7 +119,7 @@ export class BookformComponent implements OnInit {
       data => {
         this.searchResults = data.items;
         console.log('searchResults:', this.searchResults);
-        this.numResults = data.totalItems;
+        this.totalResults = data.totalItems;
         this.searching = false;
       },
       err => {

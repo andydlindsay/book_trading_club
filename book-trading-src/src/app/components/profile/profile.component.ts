@@ -176,7 +176,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onUpdateClick() {
-    if (this.profileForm.valid) {
+    if (this.profileForm.valid && this.profileForm.dirty) {
       const userInfo = {
         'fullName': this.profileForm.value.fullname,
         'city': this.profileForm.value.city,
@@ -186,6 +186,7 @@ export class ProfileComponent implements OnInit {
         data => {
           if (data.success) {
             this.flashMessage.show('Profile information saved.', { cssClass: 'alert-success' });
+            this.profileForm.markAsPristine();
           } else {
             this.flashMessage.show(data.msg + ' Please try again.', { cssClass: 'alert-failure' });
           }

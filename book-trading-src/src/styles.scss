@@ -1,5 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import './theme';
+
+/* media queries */
+@media only screen and (max-width: 750px) {
+    body {
+        margin: 0 !important;
+        width: 100% !important;
+    }
+}
+
+$primary: rgba(62,39,35,0.3);
+$accent: rgba(38,50,56,0.15);
 
 /* elements */
 html {
@@ -8,8 +20,9 @@ html {
 
 body {
     font-family: 'Slabo 27px', serif !important;
-    margin: 0;
-    background-color: rgba(123,19,181,0.15);
+    margin: auto;
+    width: 80%;
+    background-color: $accent;
 }
 
 md-card-content {
@@ -40,6 +53,10 @@ md-card {
 }
 
 /* classes */
+.primary-color {
+    background-color: $primary;
+}
+
 .title-bar {
     font-weight: normal;
 }
@@ -77,7 +94,7 @@ md-card {
     display: flex;
     flex-wrap: wrap;
     margin: auto;
-    width: 80%;
+    /*width: 80%;*/
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -275,8 +292,12 @@ md-card {
 
 /* id's */
 #nav {
-    width: 80%;
+    /*width: 80%;*/
     margin: auto;
     padding-top: 16px !important;
     font-family: 'Slabo 27px', serif !important;
+}
+
+#info-area {
+    max-width: 450px;
 }
