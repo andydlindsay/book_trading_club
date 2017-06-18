@@ -59,20 +59,20 @@
             </md-toolbar>
             <md-card-content>
 
-                <form [formGroup]="profileForm">
+                <form [formGroup]="profileForm" *ngIf="user != undefined">
                     <md-input-container>
-                        <input type="text" required mdInput placeholder="Full name" formControlName="fullname" id="fullname">
+                        <input [ngModel]="user.fullName" type="text" mdInput placeholder="Full name" formControlName="fullname" id="fullname">
                         <md-hint *ngIf="formErrors.fullname">{{ formErrors.fullname }}</md-hint>
                     </md-input-container>
                     <md-input-container>
-                        <input type="text" required mdInput placeholder="City" formControlName="city" id="city">
+                        <input [ngModel]="user.city" type="text" mdInput placeholder="City" formControlName="city" id="city">
                         <md-hint *ngIf="formErrors.city">{{ formErrors.city }}</md-hint>
                     </md-input-container>
                     <md-input-container>
-                        <input type="text" required mdInput placeholder="State" formControlName="state" id="state">
+                        <input [ngModel]="user.state" type="text" mdInput placeholder="State" formControlName="state" id="state">
                         <md-hint *ngIf="formErrors.state">{{ formErrors.state }}</md-hint>
                     </md-input-container>
-                    <button class="title-font" md-raised-button color="primary">Update</button>
+                    <button class="title-font" md-raised-button color="primary" (click)="onUpdateClick()">Update</button>
                 </form>
 
             </md-card-content>

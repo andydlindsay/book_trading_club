@@ -81,7 +81,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
 });
 
 // update user information
-router.put('/update',
+router.post('/update',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
         const userObj = {
@@ -90,6 +90,8 @@ router.put('/update',
             'city': req.body.city,
             'state': req.body.state
         }
+        console.log('req.body:', req.body);
+        console.log('userObj:', userObj);
         User.updateUser(userObj, (err, doc) => {
             if (err) {
                 res.json({ success: false, msg: 'Failed to update information.', errmsg: err.message });

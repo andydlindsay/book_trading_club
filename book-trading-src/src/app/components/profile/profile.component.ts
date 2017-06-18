@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
       data => {
         if (data) {
           this.user = data.user;
-          console.log(this.user);
+          console.log('user:', this.user);
           this.bookService.getBooksByOwner(this.user['id']).subscribe(
             data => {
               this.books = data.books;
@@ -123,13 +123,14 @@ export class ProfileComponent implements OnInit {
   buildForm(): void {
     this.profileForm = this.fb.group({
       'fullname': ['', [
-        Validators.required
+        Validators.maxLength(35),
+        Validators.minLength(3)
       ]],
       'city': ['', [
-        Validators.required
+        Validators.maxLength(25)
       ]],
       'state': ['', [
-        Validators.required
+        Validators.maxLength(25)
       ]]
     });
     this.profileForm.valueChanges.subscribe(data => this.onValueChanged(data));
@@ -163,13 +164,37 @@ export class ProfileComponent implements OnInit {
 
   validationMessages = {
     'fullname': {
-      'required': 'Full name is required.'
+      'maxlength': 'Name must be 25 characters or less.',
+      'minlength': 'Name must be at least 3 characters long.'
     },
     'city': {
-      'required': 'City is required.'
+      'maxlength': 'City must be 25 characters or less.'
     },
     'state': {
-      'required': 'State is required.'
+      'maxlength': 'State must be 25 characters or less.'
+    }
+  }
+
+  onUpdateClick() {
+    if (this.profileForm.valid) {
+      const userInfo = {
+        'fullName': this.profileForm.value.fullname,
+        'city': this.profileForm.value.city,
+        'state': this.profileForm.value.state
+      }
+      this.auth.updateUser(userInfo).subscribe(
+        data => {
+          if (data.success) {
+            this.flashMessage.show('Profile information saved.', { cssClass: 'alert-success' });
+          } else {
+            this.flashMessage.show(data.msg + ' Please try again.', { cssClass: 'alert-failure' });
+          }
+        },
+        err => {
+          console.error(err);
+          return false;
+        }
+      );
     }
   }
 

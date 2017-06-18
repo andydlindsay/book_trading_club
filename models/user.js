@@ -6,8 +6,7 @@ const userSchema = mongoose.Schema({
     fullName: {
         type: String,
         maxlength: [35, 'Name must be 35 characters or less.'],
-        minlength: [3, 'Name must be at least 3 characters long.'],
-        match: /^[a-zA-Z0-9\s]+$/
+        minlength: [3, 'Name must be at least 3 characters long.']
     },
     username: {
         type: String,
@@ -22,11 +21,11 @@ const userSchema = mongoose.Schema({
     },
     city: {
         type: String,
-        match: /^[a-zA-Z0-9\s]+$/
+        maxlength: [25, 'City must be 25 characters or less.']
     },
     state: {
         type: String,
-        match: /^[a-zA-Z0-9\s]+$/
+        maxlength: [25, 'State must be 25 characters or less.']
     },
     ts: {
         type: Date,
