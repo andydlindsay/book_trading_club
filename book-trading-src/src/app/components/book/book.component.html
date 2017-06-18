@@ -3,7 +3,7 @@
     <span class="title-font">{{ book.title }}</span>
     <span class="app-toolbar-filler"></span>
     <button *ngIf="book.available && book.owner.owner_id != user_id" md-raised-button color="primary" class="title-font" (click)="onRequestClick()">Request Book</button>
-    <button class="title-font" md-raised-button color="accent" *ngIf="book.owner.owner_id == user_id">Delete Book</button>
+    <button class="title-font" md-raised-button color="accent" *ngIf="book.owner.owner_id == user_id" (click)="onDeleteClick()">Delete Book</button>
     <span class="title-font" *ngIf="!book.available && book.owner.owner_id != user_id">Not available for trade</span>
   </md-toolbar>
   <md-card-content>

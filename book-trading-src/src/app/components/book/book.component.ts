@@ -92,4 +92,21 @@ export class BookComponent implements OnInit {
     }
   }
 
+  onDeleteClick() {
+    this.bookService.deleteBook(this.book._id).subscribe(
+      data => {
+        if (data.success) {
+          this.flashMessage.show('Book deleted!', { cssClass: 'alert-success' });
+          this.router.navigate(['/profile']);
+        } else {
+          this.flashMessage.show(data.msg + '. Please try again.', { cssClass: 'alert-failure' });
+        }
+      },
+      err => {
+        console.error(err);
+        return false;
+      }
+    );
+  }
+
 }

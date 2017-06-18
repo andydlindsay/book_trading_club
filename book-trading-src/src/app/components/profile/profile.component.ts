@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { BookService } from '../../services/book.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +16,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private titleService: Title,
+    private fb: FormBuilder,
     private auth: AuthService,
     private bookService: BookService,
     private flashMessage: FlashMessagesService,
@@ -24,6 +27,7 @@ export class ProfileComponent implements OnInit {
   user: any;
   booksRequestedBy: any;
   booksRequestedFrom: any;
+  profileForm: FormGroup;
 
   ngOnInit() {
     this.titleService.setTitle('Profile - Book Xchange');
@@ -69,6 +73,7 @@ export class ProfileComponent implements OnInit {
         return false;
       }
     );
+    this.buildForm();
   }
 
   onCancelClick(book_id) {
@@ -113,6 +118,59 @@ export class ProfileComponent implements OnInit {
         return false;
       }
     );
+  }
+
+  buildForm(): void {
+    this.profileForm = this.fb.group({
+      'fullname': ['', [
+        Validators.required
+      ]],
+      'city': ['', [
+        Validators.required
+      ]],
+      'state': ['', [
+        Validators.required
+      ]]
+    });
+    this.profileForm.valueChanges.subscribe(data => this.onValueChanged(data));
+  }
+
+  // onValueChanged function taken from the Angular Cookbook's Form Validation section
+  // https://angular.io/docs/ts/latest/cookbook/form-validation.html
+  onValueChanged(data?: any) {
+    if (!this.profileForm) { return; }
+    const form = this.profileForm;
+
+    for (const field in this.formErrors) {
+      // clear previous error message if any
+      this.formErrors[field] = '';
+      const control = form.get(field);
+
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
+    }
+  }
+
+  formErrors = {
+    'fullname': '',
+    'city': '',
+    'state': ''
+  }
+
+  validationMessages = {
+    'fullname': {
+      'required': 'Full name is required.'
+    },
+    'city': {
+      'required': 'City is required.'
+    },
+    'state': {
+      'required': 'State is required.'
+    }
   }
 
 }

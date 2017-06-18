@@ -1,73 +1,87 @@
-<!-- TRADE REQUESTS AREA-->
 <div class="standard-flex">
     
     <!-- your trade requrests -->
-    <div class="flex-1" *ngIf="booksRequestedBy != undefined">
+    <div class="flex-1">
         <md-card>
+
             <md-toolbar>
-                <span class="title-font">Your Requests</span>
+                <span class="title-font">Your Trade Requests</span>
             </md-toolbar>
+
             <md-card-content>
-                <div *ngIf="!booksRequestedBy.length > 0">
-                    <h3 class="text-center title-font padding-bottom-16">You have no outstanding trade requests</h3>
-                </div>
-                <div *ngIf="booksRequestedBy.length > 0">
-                    <div class="standard-flex" *ngFor="let bookRequestedBy of booksRequestedBy">
-                        <h3 class="title-font flex-1 padding-left-16">
-                            You requested <a routerLink="{{ '/book/' + bookRequestedBy._id }}">{{ bookRequestedBy.title }}</a> from {{ bookRequestedBy.owner.username }}
-                        </h3>
-                        <span class="app-toolbar-filler"></span>
-                        <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
-                            <button md-raised-button color="accent" class="title-font" (click)="onCancelClick(bookRequestedBy._id)">Cancel</button>
+
+                <div *ngIf="booksRequestedBy != undefined">
+                    <div *ngIf="booksRequestedBy.length > 0">
+                        <div class="standard-flex" *ngFor="let bookRequestedBy of booksRequestedBy">
+                            <h3 class="title-font flex-1 padding-left-16">
+                                You requested <a routerLink="{{ '/book/' + bookRequestedBy._id }}">{{ bookRequestedBy.title }}</a> from {{ bookRequestedBy.owner.username }}
+                            </h3>
+                            <span class="app-toolbar-filler"></span>
+                            <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
+                                <button md-raised-button color="accent" class="title-font" (click)="onCancelClick(bookRequestedBy._id)">Cancel</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </md-card-content>
-        </md-card>
-    </div>
 
-    <!-- trade requests for you -->
-    <div class="flex-1" *ngIf="booksRequestedFrom != undefined">
-        <md-card>
-            <md-toolbar>
-                <span class="title-font">Requests from Other Users</span>
-            </md-toolbar>
-            <md-card-content>
-                <div *ngIf="!booksRequestedFrom.length > 0">
-                    <h3 class="text-center title-font padding-bottom-16">You have no outstanding trade requests</h3>
-                </div>
-                <div *ngIf="booksRequestedFrom.length > 0">
-                    <div class="standard-flex" *ngFor="let bookRequestedFrom of booksRequestedFrom">
-                        <h3 class="title-font flex-1 padding-left-16">
-                            {{ bookRequestedFrom.requestedBy.username }} has requested <a routerLink="{{ '/book/' + bookRequestedFrom._id }}">{{ bookRequestedFrom.title }}</a>
-                        </h3>
-                        <span class="app-toolbar-filler"></span>
-                        <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
-                            <button md-raised-button color="primary" class="title-font" (click)="onAcceptClick(bookRequestedFrom._id)">Accept</button>
-                            &nbsp;&nbsp;
-                            <button md-raised-button color="accent" class="title-font" (click)="onCancelClick(bookRequestedFrom._id)">Reject</button>
+                <div *ngIf="booksRequestedFrom != undefined">
+                    <div *ngIf="booksRequestedFrom.length > 0">
+                        <div class="standard-flex" *ngFor="let bookRequestedFrom of booksRequestedFrom">
+                            <h3 class="title-font flex-1 padding-left-16">
+                                {{ bookRequestedFrom.requestedBy.username }} has requested <a routerLink="{{ '/book/' + bookRequestedFrom._id }}">{{ bookRequestedFrom.title }}</a> from you
+                            </h3>
+                            <span class="app-toolbar-filler"></span>
+                            <div class="padding-right-16 padding-top-8 padding-bottom-8 padding-left-16 margin-auto">
+                                <button md-raised-button color="primary" class="title-font" (click)="onAcceptClick(bookRequestedFrom._id)">Accept</button>
+                                &nbsp;&nbsp;
+                                <button md-raised-button color="accent" class="title-font" (click)="onCancelClick(bookRequestedFrom._id)">Reject</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div *ngIf="booksRequestedBy != undefined && booksRequestedFrom != undefined">
+                    <div *ngIf="!booksRequestedBy.length > 0 && !booksRequestedFrom.length > 0">
+                        <h3 class="text-center title-font padding-bottom-16">You have no outstanding trade requests</h3>
+                    </div>
+                </div>
+
             </md-card-content>
+            
         </md-card>
     </div>
 
-</div>
-
-<!-- PROFILE INFO AREA-->
-<div class="standard-flex">
+    <!-- PROFILE INFO AREA-->
     <div class="flex-1">
         <md-card>
             <md-toolbar>
-                <span class="title-font">Profile Info</span>
+                <span class="title-font">Your Info</span>
             </md-toolbar>
             <md-card-content>
+
+                <form [formGroup]="profileForm">
+                    <md-input-container>
+                        <input type="text" required mdInput placeholder="Full name" formControlName="fullname" id="fullname">
+                        <md-hint *ngIf="formErrors.fullname">{{ formErrors.fullname }}</md-hint>
+                    </md-input-container>
+                    <md-input-container>
+                        <input type="text" required mdInput placeholder="City" formControlName="city" id="city">
+                        <md-hint *ngIf="formErrors.city">{{ formErrors.city }}</md-hint>
+                    </md-input-container>
+                    <md-input-container>
+                        <input type="text" required mdInput placeholder="State" formControlName="state" id="state">
+                        <md-hint *ngIf="formErrors.state">{{ formErrors.state }}</md-hint>
+                    </md-input-container>
+                    <button class="title-font" md-raised-button color="primary">Update</button>
+                </form>
 
             </md-card-content>
         </md-card>
     </div>
+
 </div>
+
+
 
 <!-- BOOK AREA -->
 <md-card>

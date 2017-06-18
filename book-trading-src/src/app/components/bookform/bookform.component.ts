@@ -111,6 +111,7 @@ export class BookformComponent implements OnInit {
         let smallUrl, smallThumbnailUrl;
         console.log('data', data);
         if (data.volumeInfo.imageLinks == undefined) {
+          // book has no image, substitute book image from s3
           smallUrl = 'https://s3.amazonaws.com/andydlindsay-book-trading/book-152-191668.png';
           smallThumbnailUrl = 'https://s3.amazonaws.com/andydlindsay-book-trading/book-152-191668.png';
         } else {
@@ -126,6 +127,8 @@ export class BookformComponent implements OnInit {
         this.bookService.addBook(newBook).subscribe(
           data => {
             console.log('book added?', data);
+            this.flashMessage.show('Book added!', { cssClass: 'alert-success' });
+            this.updateSearchResults();
           },
           err => {
             console.error(err);

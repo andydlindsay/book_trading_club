@@ -98,6 +98,17 @@ export class BookService {
       .map(res => res.json());
   }
 
+  deleteBook(book_id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    return this.http.delete(
+        this.baseUrl + '/api/books/' + book_id,
+        { headers })
+      .map(res => res.json());
+  }
+
   addBook(newBook): any {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
