@@ -3,18 +3,18 @@
     <md-toolbar class="title-font">
       <h2 class="title-bar">Book Xchange</h2>
       <span class="app-toolbar-filler"></span>
-      <a routerLink="/">Home</a>
+      <a class="hover-underline" routerLink="/">Home</a>
       <div *ngIf="!isLoggedIn()">
         <span>&nbsp;&nbsp;&nbsp;</span>
-        <a routerLink="/register">Register</a>
+        <a class="hover-underline" routerLink="/register">Register</a>
         <span>&nbsp;&nbsp;</span>
-        <a routerLink="/login">Login</a>
+        <a class="hover-underline" routerLink="/login">Login</a>
       </div>
       <div *ngIf="isLoggedIn()">
         <span>&nbsp;&nbsp;&nbsp;</span>
-        <a routerLink="/profile">Profile</a>
+        <a class="hover-underline" routerLink="/profile">Profile</a>
         <span>&nbsp;&nbsp;</span>
-        <a class="anchor-button" (click)="onLogoutClick()">Logout</a>
+        <a class="anchor-button hover-underline" (click)="onLogoutClick()">Logout</a>
       </div>
     </md-toolbar>
     <md-card-content>

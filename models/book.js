@@ -107,7 +107,7 @@ module.exports.tradeBook = function(book_id, callback) {
                 Book.findOneAndUpdate({ '_id': book_id },
                     {
                         'owner.owner_id': doc.requestedBy.requester_id,
-                        'owner.username': doc.requestedBy.requester_username,
+                        'owner.username': doc.requestedBy.username,
                         'requestedBy.requester_id': null,
                         'requestedBy.username': null,
                         'available': true,

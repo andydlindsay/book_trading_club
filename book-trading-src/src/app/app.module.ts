@@ -29,7 +29,7 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'book/:id', component: BookComponent },
-  { path: 'book/new', component: BookformComponent, canActivate: [AuthGuard] },
+  { path: 'newbook', component: BookformComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/' }
 ]
 

@@ -5,7 +5,7 @@
     <div class="flex-1" *ngIf="booksRequestedBy != undefined">
         <md-card>
             <md-toolbar>
-                <span class="title-font">Your Trade Requests</span>
+                <span class="title-font">Your Requests</span>
             </md-toolbar>
             <md-card-content>
                 <div *ngIf="!booksRequestedBy.length > 0">
@@ -30,7 +30,7 @@
     <div class="flex-1" *ngIf="booksRequestedFrom != undefined">
         <md-card>
             <md-toolbar>
-                <span class="title-font">Trade Requests for You</span>
+                <span class="title-font">Requests from Other Users</span>
             </md-toolbar>
             <md-card-content>
                 <div *ngIf="!booksRequestedFrom.length > 0">
@@ -74,7 +74,7 @@
     <md-toolbar>
         <span class="title-font">Your Books</span>
         <span class="app-toolbar-filler"></span>
-        <button md-raised-button color="primary" class="title-font">Add Book</button>
+        <button md-raised-button color="primary" routerLink="/newbook" class="title-font">Add Book</button>
     </md-toolbar>
     <md-card-content>
         <!-- book cards -->

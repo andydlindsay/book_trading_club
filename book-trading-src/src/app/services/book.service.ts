@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { GooglebookService } from './googlebook.service';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -9,7 +10,8 @@ export class BookService {
   baseUrl: String = 'http://localhost:8080';
 
   constructor(
-    private http: Http
+    private http: Http,
+    private googlebookService: GooglebookService
   ) { }
 
   getBooks() {
@@ -94,6 +96,18 @@ export class BookService {
         this.baseUrl + '/api/books/requestedfrom',
         { headers })
       .map(res => res.json());
+  }
+
+  addBook(newBook): any {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    return this.http.post(
+      this.baseUrl + '/api/books/new',
+      newBook,
+      { headers })
+    .map(res => res.json());
   }
 
 }

@@ -1,3 +1,51 @@
-<p>
-  bookform works!
-</p>
+<md-card>
+  <md-toolbar>
+    <span class="title-font">Add a Book</span>
+  </md-toolbar>
+
+  <md-card-content>
+
+    <form [formGroup]="searchForm">
+      <md-input-container>
+        <input type="search" required mdInput placeholder="Enter a title or author" formControlName="search" id="search">
+        <md-hint *ngIf="formErrors.search">{{ formErrors.search }}</md-hint>
+      </md-input-container>
+      <button type="submit" md-raised-button color="accent" (click)="onSearchSubmit()"><md-icon>search</md-icon></button>
+    </form>
+
+    <!-- display if currently searching -->
+    <div *ngIf="searching == true" class="padding-left-24 padding-bottom-24">
+      <md-spinner></md-spinner>
+    </div>
+
+    <!-- display if search has been done -->
+    <div *ngIf="searchResults != undefined" class="standard-flex" id="results">
+
+      <!-- display if results returned is 0 -->
+      <div *ngIf="searchResults.length == 0">
+        <h2>No books found! Sorry.</h2>
+      </div>
+
+      <!-- display search results -->
+      <div class="margin-auto standard-flex flex-1 max-width-198" *ngFor="let result of searchResults">
+
+        <!-- image -->
+        <div class="flex-1 padding-top-16 min-width-300">
+          <img class="margin-auto display-block" *ngIf="result.volumeInfo.imageLinks != undefined" src="{{ result.volumeInfo.imageLinks.thumbnail }}">
+          <img class="margin-auto display-block max-width-128" *ngIf="result.volumeInfo.imageLinks == undefined" src="https://s3.amazonaws.com/andydlindsay-book-trading/book-152-191668.png">
+        </div>
+
+        <!-- info -->
+        <div class="flex-1 padding-right-24 padding-bottom-16 text-center">
+          <h3>{{ result.volumeInfo.title }}</h3>
+          <h3 *ngIf="result.volumeInfo.authors != undefined">by {{ result.volumeInfo.authors.join(', ') }}</h3>
+          <button md-raised-button color="primary" (click)="addBook(result.id)">Add Book</button>
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </md-card-content> 
+</md-card>

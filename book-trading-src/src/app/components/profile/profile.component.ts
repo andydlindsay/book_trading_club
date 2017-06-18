@@ -76,6 +76,8 @@ export class ProfileComponent implements OnInit {
       data => {
         if (data.success) {
           this.flashMessage.show('Request cancelled.', { cssClass: 'alert-success' });
+          // page refresh hack from Serj Sagan's answer on stackoverflow
+          // https://stackoverflow.com/questions/38036498/angular2-router3-cant-reload-refresh-active-route/44580036#44580036
           const currentUrl = this.router.url;
           const refreshUrl = currentUrl.indexOf('someRoute') > -1 ? '/someOtherRoute' : '/someRoute';
           this.router.navigateByUrl(refreshUrl).then(() => {

@@ -108,11 +108,19 @@ md-card {
     flex: 4;
 }
 
+.flex-5 {
+    flex: 5;
+}
+
+.flex-6 {
+    flex: 6;
+}
+
 .mat-input-container {
     width: 100%;
     margin-top: 5px;
     font-size: 1.25em;
-    padding-top: 16px;
+    padding-top: 0px;
 }
 
 .alert-failure {
@@ -135,6 +143,10 @@ md-card {
 
 .padding-left-16 {
     padding-left: 16px !important;
+}
+
+.padding-left-24 {
+    padding-left: 24px !important;
 }
 
 .padding-right-16 {
@@ -217,6 +229,14 @@ md-card {
     max-width: 300px;
 }
 
+.max-width-128 {
+    max-width: 128px;
+}
+
+.max-width-198 {
+    max-width: 308px;
+}
+
 .max-width-450 {
     max-width: 450px;
 }
@@ -247,6 +267,10 @@ md-card {
 
 .title-font {
     font-family: 'Slabo 27px', serif !important;
+}
+
+.hover-underline:hover {
+    text-decoration: underline;
 }
 
 /* id's */
