@@ -13,6 +13,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class BookComponent implements OnInit {
 
+  book: any;
+  googleBook: any;
+  user_id: any;
+
   constructor(
     private titleService: Title,
     private auth: AuthService,
@@ -22,10 +26,6 @@ export class BookComponent implements OnInit {
     private flashMessage: FlashMessagesService,
     private router: Router
   ) { }
-
-  book: any;
-  googleBook: any;
-  user_id: any;
 
   ngOnInit() {
 
@@ -40,8 +40,8 @@ export class BookComponent implements OnInit {
                 this.titleService.setTitle(data.book.title + ' - Book Xchange');
                 this.googlebookService.getBookById(data.book.volumeId)
                   .subscribe(
-                    data => {
-                      this.googleBook = data;
+                    data2 => {
+                      this.googleBook = data2;
                     },
                     err => {
                       console.error(err);

@@ -15,6 +15,23 @@ import { Router } from '@angular/router';
 })
 export class BookformComponent implements OnInit {
 
+  searchForm: FormGroup;
+  searchTerm: string;
+  searchResults: any;
+  totalResults: number;
+  searching: boolean;
+  currentPage: number;
+  itemsPerPage: number;
+  formErrors = {
+    'search': ''
+  };
+
+  validationMessages = {
+    'search': {
+      'required': 'A search city is required.'
+    }
+  };
+
   constructor(
     private fb: FormBuilder,
     private titleService: Title,
@@ -25,16 +42,11 @@ export class BookformComponent implements OnInit {
     private bookService: BookService
   ) { }
 
-  searchForm: FormGroup;
-  searchTerm: string;
-  searchResults: any;
-  totalResults: number;
-  searching: boolean = false;
-  currentPage: number = 1;
-  itemsPerPage: number = 12;
-
   ngOnInit() {
     this.titleService.setTitle('Add a Book - Book Xchange');
+    this.searching = false;
+    this.currentPage = 1;
+    this.itemsPerPage = 12;
     this.buildForm();
   }
 
@@ -54,31 +66,25 @@ export class BookformComponent implements OnInit {
     const form = this.searchForm;
 
     for (const field in this.formErrors) {
-      // clear previous error message if any
-      this.formErrors[field] = '';
-      const control = form.get(field);
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error message if any
+        this.formErrors[field] = '';
+        const control = form.get(field);
 
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
         }
       }
     }
   }
 
-  formErrors = {
-    'search': ''
-  }
-
-  validationMessages = {
-    'search': {
-      'required': 'A search city is required.'
-    }
-  }
-
   isFirstPage() {
-    if (this.currentPage == 1) {
+    if (this.currentPage === 1) {
       return true;
     } else {
       return false;
@@ -86,7 +92,7 @@ export class BookformComponent implements OnInit {
   }
 
   isLastPage() {
-    if (Math.ceil(Number(this.totalResults) / Number(this.itemsPerPage)) == this.currentPage) {
+    if (Math.ceil(Number(this.totalResults) / Number(this.itemsPerPage)) === this.currentPage) {
       return true;
     } else {
       return false;
@@ -135,22 +141,22 @@ export class BookformComponent implements OnInit {
       data => {
         let smallUrl, smallThumbnailUrl;
         // console.log('data', data);
-        if (data.volumeInfo.imageLinks == undefined) {
+        if (data.volumeInfo.imageLinks === undefined) {
           // book has no image, substitute book image from s3
           smallUrl = 'https://s3.amazonaws.com/andydlindsay-book-trading/book-152-191668.png';
           smallThumbnailUrl = 'https://s3.amazonaws.com/andydlindsay-book-trading/book-152-191668.png';
         } else {
-          smallUrl = data.volumeInfo.imageLinks.small,
-          smallThumbnailUrl = data.volumeInfo.imageLinks.smallThumbnail
+          smallUrl = data.volumeInfo.imageLinks.small;
+          smallThumbnailUrl = data.volumeInfo.imageLinks.smallThumbnail;
         }
         const newBook = {
           volumeId,
           title: data.volumeInfo.title,
           smallUrl,
           smallThumbnailUrl
-        }
+        };
         this.bookService.addBook(newBook).subscribe(
-          data => {
+          data2 => {
             this.flashMessage.show('Book added!', { cssClass: 'alert-success' });
             this.updateSearchResults();
           },

@@ -13,6 +13,21 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  loginForm: FormGroup;
+  formErrors = {
+    'username': '',
+    'password': ''
+  };
+
+  validationMessages = {
+    'username': {
+      'required': 'Username is required.'
+    },
+    'password': {
+      'required': 'Password is required.'
+    }
+  };
+
   constructor(
     private fb: FormBuilder,
     private titleService: Title,
@@ -20,8 +35,6 @@ export class LoginComponent implements OnInit {
     private flashMessage: FlashMessagesService,
     private router: Router
   ) { }
-
-  loginForm: FormGroup;
 
   ngOnInit(): void {
     this.titleService.setTitle('Login - Book Xchange');
@@ -48,30 +61,20 @@ export class LoginComponent implements OnInit {
     const form = this.loginForm;
 
     for (const field in this.formErrors) {
-      // clear previous error message if any
-      this.formErrors[field] = '';
-      const control = form.get(field);
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error message if any
+        this.formErrors[field] = '';
+        const control = form.get(field);
 
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
         }
       }
-    }
-  }
-
-  formErrors = {
-    'username': '',
-    'password': ''
-  }
-
-  validationMessages = {
-    'username': {
-      'required': 'Username is required.'
-    },
-    'password': {
-      'required': 'Password is required.'
     }
   }
 

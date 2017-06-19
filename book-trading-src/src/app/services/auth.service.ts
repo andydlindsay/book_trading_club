@@ -18,7 +18,7 @@ export class AuthService {
 
   updateUser(userInfo) {
     console.log('userInfo:', userInfo);
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
@@ -30,14 +30,14 @@ export class AuthService {
   }
 
   registerUser(user) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(this.baseUrl + '/api/users/register', user, { headers })
       .map(res => res.json());
   }
 
   authenticateUser(user) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(this.baseUrl + '/api/users/authenticate', user, { headers })
       .map(res => res.json());
@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   getUserProfile() {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
@@ -64,7 +64,7 @@ export class AuthService {
 
   loggedIn() {
     this.loadToken();
-    if (this.authToken != null || this.authToken != undefined) {
+    if (this.authToken !== null || this.authToken !== undefined) {
       return !(this.jwtHelper.isTokenExpired(this.authToken));
     } else {
       return false;

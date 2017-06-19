@@ -13,6 +13,26 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
+  registerForm: FormGroup;
+  formErrors = {
+    'username': '',
+    'password': ''
+  };
+
+  validationMessages = {
+    'username': {
+      'required': 'Username is required.',
+      'minlength': 'Username must be at least 8 characters long.',
+      'maxlength': 'Username cannot be more than 25 characters long.',
+      'pattern': 'Username cannot contain special characters or spaces.'
+    },
+    'password': {
+      'required': 'Password is required.',
+      'minlength': 'Password must be at least 8 characters long.',
+      'maxlength': 'Password cannot be more than 25 characters long.'
+    }
+  };
+
   constructor(
     private fb: FormBuilder,
     private titleService: Title,
@@ -21,8 +41,6 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {
   }
-
-  registerForm: FormGroup;
 
   ngOnInit(): void {
     this.titleService.setTitle('Register - Book Xchange');
@@ -55,35 +73,20 @@ export class RegisterComponent implements OnInit {
     const form = this.registerForm;
 
     for (const field in this.formErrors) {
-      // clear previous error message if any
-      this.formErrors[field] = '';
-      const control = form.get(field);
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error message if any
+        this.formErrors[field] = '';
+        const control = form.get(field);
 
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
         }
       }
-    }
-  }
-
-  formErrors = {
-    'username': '',
-    'password': ''
-  }
-
-  validationMessages = {
-    'username': {
-      'required': 'Username is required.',
-      'minlength': 'Username must be at least 8 characters long.',
-      'maxlength': 'Username cannot be more than 25 characters long.',
-      'pattern': 'Username cannot contain special characters or spaces.'
-    },
-    'password': {
-      'required': 'Password is required.',
-      'minlength': 'Password must be at least 8 characters long.',
-      'maxlength': 'Password cannot be more than 25 characters long.'
     }
   }
 
@@ -95,11 +98,13 @@ export class RegisterComponent implements OnInit {
       // submit user to database
       this.auth.registerUser(newUser).subscribe(data => {
         if (data.success) {
-          this.flashMessage.show('You have successfully registered! Please log in with your username and password.', { cssClass: 'alert-success', timeout: 5000 });
+          const msg = 'You have successfully registered! Please log in with your username and password.';
+          this.flashMessage.show(msg, { cssClass: 'alert-success', timeout: 5000 });
           this.router.navigate(['/login']);
         } else {
           if (data.errmsg.includes('E11000')) {
-            this.flashMessage.show('A user with that username already exists. Please choose a different username.', { cssClass: 'alert-failure', timeout: 5000 });
+            const msg = 'A user with that username already exists. Please choose a different username.';
+            this.flashMessage.show(msg, { cssClass: 'alert-failure', timeout: 5000 });
           } else {
             this.flashMessage.show(data.msg, { cssClass: 'alert-failure', timeout: 5000 });
           }

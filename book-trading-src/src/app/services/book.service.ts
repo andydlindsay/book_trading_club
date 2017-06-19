@@ -16,14 +16,14 @@ export class BookService {
   ) { }
 
   getBooks() {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get(this.baseUrl + '/api/books/', { headers })
       .map(res => res.json());
   }
 
   getBooksByOwner(owner_id) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get(
         this.baseUrl + '/api/books/byowner/' + owner_id,
@@ -32,7 +32,7 @@ export class BookService {
   }
 
   getBookById(book_id) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get(
         this.baseUrl + '/api/books/' + book_id,
@@ -41,7 +41,7 @@ export class BookService {
   }
 
   makeRequest(book_id) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -52,7 +52,7 @@ export class BookService {
   }
 
   cancelRequest(book_id) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -63,7 +63,7 @@ export class BookService {
   }
 
   tradeBook(book_id) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -78,7 +78,7 @@ export class BookService {
   }
 
   getBooksRequestedByUser() {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -89,7 +89,7 @@ export class BookService {
   }
 
   getBooksRequestedFromUser() {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -100,7 +100,7 @@ export class BookService {
   }
 
   deleteBook(book_id) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -111,7 +111,7 @@ export class BookService {
   }
 
   addBook(newBook): any {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.loadToken();
     headers.append('Authorization', this.authToken);

@@ -10,13 +10,13 @@ import { BookService } from '../../services/book.service';
 })
 export class HomeComponent implements OnInit {
 
+  books: any;
+
   constructor(
     private titleService: Title,
     private auth: AuthService,
     private bookService: BookService
   ) { }
-
-  books: any;
 
   ngOnInit() {
     this.titleService.setTitle('Home - Book Xchange');

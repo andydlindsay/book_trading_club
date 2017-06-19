@@ -31,7 +31,7 @@ const appRoutes: Routes = [
   { path: 'book/:id', component: BookComponent },
   { path: 'newbook', component: BookformComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/' }
-]
+];
 
 @NgModule({
   declarations: [

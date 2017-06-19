@@ -10,7 +10,7 @@ export class GooglebookService {
   ) { }
 
   public getBookById(volume_id): any {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get(
         'https://www.googleapis.com/books/v1/volumes/' + volume_id,
@@ -21,7 +21,7 @@ export class GooglebookService {
 
   public getBooks(searchTerm, itemsPerPage, currentPage) {
     const startIndex = (currentPage - 1) * itemsPerPage < 0 ? 0 : (currentPage - 1) * itemsPerPage;
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const queryString = '?q=' + searchTerm + '&printType=books&startIndex=' + startIndex + '&maxResults=' + itemsPerPage;
     return this.http.get(

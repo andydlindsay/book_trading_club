@@ -14,6 +14,29 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class ProfileComponent implements OnInit {
 
+  formErrors = {
+    'fullname': '',
+    'city': '',
+    'state': ''
+  };
+  validationMessages = {
+    'fullname': {
+      'maxlength': 'Name must be 25 characters or less.',
+      'minlength': 'Name must be at least 3 characters long.'
+    },
+    'city': {
+      'maxlength': 'City must be 25 characters or less.'
+    },
+    'state': {
+      'maxlength': 'State must be 25 characters or less.'
+    }
+  };
+  books: any;
+  user: any;
+  booksRequestedBy: any;
+  booksRequestedFrom: any;
+  profileForm: FormGroup;
+
   constructor(
     private titleService: Title,
     private fb: FormBuilder,
@@ -23,12 +46,6 @@ export class ProfileComponent implements OnInit {
     private router: Router
   ) { }
 
-  books: any;
-  user: any;
-  booksRequestedBy: any;
-  booksRequestedFrom: any;
-  profileForm: FormGroup;
-
   ngOnInit() {
     this.titleService.setTitle('Profile - Book Xchange');
     this.auth.getUserProfile().subscribe(
@@ -37,8 +54,8 @@ export class ProfileComponent implements OnInit {
           this.user = data.user;
           // console.log('user:', this.user);
           this.bookService.getBooksByOwner(this.user['id']).subscribe(
-            data => {
-              this.books = data.books;
+            data2 => {
+              this.books = data2.books;
               // console.log(this.books);
             },
             err => {
@@ -84,7 +101,13 @@ export class ProfileComponent implements OnInit {
           // page refresh hack from Serj Sagan's answer on stackoverflow
           // https://stackoverflow.com/questions/38036498/angular2-router3-cant-reload-refresh-active-route/44580036#44580036
           const currentUrl = this.router.url;
-          const refreshUrl = currentUrl.indexOf('someRoute') > -1 ? '/someOtherRoute' : '/someRoute';
+          let refreshUrl;
+          if (currentUrl.indexOf('someRoute') > -1) {
+            refreshUrl = '/someOtherRoute';
+          } else {
+            refreshUrl = '/someRoute';
+          }
+          // const refreshUrl = Number(currentUrl.indexOf('someRoute')) > -1 ? '/someOtherRoute' : '/someRoute';
           this.router.navigateByUrl(refreshUrl).then(() => {
             this.router.navigateByUrl(currentUrl);
           });
@@ -105,7 +128,13 @@ export class ProfileComponent implements OnInit {
         if (data.success) {
           this.flashMessage.show('Trade accepted.', { cssClass: 'alert-success' });
           const currentUrl = this.router.url;
-          const refreshUrl = currentUrl.indexOf('someRoute') > -1 ? '/someOtherRoute' : '/someRoute';
+          let refreshUrl;
+          if (currentUrl.indexOf('someRoute') > -1) {
+            refreshUrl = '/someOtherRoute';
+          } else {
+            refreshUrl = '/someRoute';
+          }
+          // const refreshUrl = Number(currentUrl.indexOf('someRoute')) > -1 ? '/someOtherRoute' : '/someRoute';
           this.router.navigateByUrl(refreshUrl).then(() => {
             this.router.navigateByUrl(currentUrl);
           });
@@ -143,35 +172,20 @@ export class ProfileComponent implements OnInit {
     const form = this.profileForm;
 
     for (const field in this.formErrors) {
-      // clear previous error message if any
-      this.formErrors[field] = '';
-      const control = form.get(field);
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error message if any
+        this.formErrors[field] = '';
+        const control = form.get(field);
 
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
         }
       }
-    }
-  }
-
-  formErrors = {
-    'fullname': '',
-    'city': '',
-    'state': ''
-  }
-
-  validationMessages = {
-    'fullname': {
-      'maxlength': 'Name must be 25 characters or less.',
-      'minlength': 'Name must be at least 3 characters long.'
-    },
-    'city': {
-      'maxlength': 'City must be 25 characters or less.'
-    },
-    'state': {
-      'maxlength': 'State must be 25 characters or less.'
     }
   }
 
@@ -181,7 +195,7 @@ export class ProfileComponent implements OnInit {
         'fullName': this.profileForm.value.fullname,
         'city': this.profileForm.value.city,
         'state': this.profileForm.value.state
-      }
+      };
       this.auth.updateUser(userInfo).subscribe(
         data => {
           if (data.success) {
